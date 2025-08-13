@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Cat Clicker</title>
+</head>
+<body>
+    <h1>Cat Clicker</h1>
+    <img src="cat.jpg" alt="Cute Cat" style="width:300px; cursor:pointer;">
+
+    <div id="counter">Clicks: 0</div>
+    <script>
+        const cat = document.querySelector('img');
+        const counter = document.getElementById('counter');
+        const catClicker = {
+            clicks: 0,
+            handleEvent(event) {
+                if (event.type === 'click') {
+                    this.clicks++;
+                    counter.textContent = `Clicks: ${this.clicks}`;
+                }
+            }
+        }
+        cat.addEventListener('click', catClicker)
+
+    </script>
+</body>
+</html>
