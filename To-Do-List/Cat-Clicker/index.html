@@ -5,28 +5,40 @@
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>Cat Clicker</title>
     <style>
-        img {cursor: pointer; width: 300px;}
+        .cat-container {
+            display: inline-block;
+            margin: 20px;
+            text-align: center;
+        }
+        img { cursor: pointer; width: 300px; }
+        .cat-name { font-weight: bold; margin-bottom: 10px; }
     </style>
 </head>
 <body>
     <h1>Cat Clicker</h1>
-    <img src="cat.jpg" alt="Cute Cat">
-
-    <div id="counter">Clicks: 0</div>
+    <div class="cat-container">
+        <div class="cat-name">Whiskers</div>
+        <img src="cat1.jpg" alt="Whiskers" id="cat1-img">
+        <div id="cat1-counter">Clicks: 0</div>
+    </div>
+    <div class="cat-container">
+        <div class="cat-name">Mittens</div>
+        <img src="cat2.jpg" alt="Mittens" id="cat2-img">
+        <div id="cat2-counter">Clicks: 0</div>
+    </div>
     <script>
-        const cat = document.querySelector('img');
-        const counter = document.getElementById('counter');
-        const catClicker = {
-            clicks: 0,
-            handleEvent(event) {
-                if (event.type === 'click') {
-                    this.clicks++;
-                    counter.textContent = `Clicks: ${this.clicks}`;
-                }
-            }
+        function setupCatClicker(imgId, counterId) {
+            let clicks = 0;
+            const img = document.getElementById(imgId);
+            const counter = document.getElementById(counterId);
+            img.addEventListener('click', function() {
+                clicks++;
+                counter.textContent = `Clicks: ${clicks}`;
+            });
         }
-        cat.addEventListener('click', catClicker)
 
+        setupCatClicker('cat1-img', 'cat1-counter');
+        setupCatClicker('cat2-img', 'cat2-counter');
     </script>
 </body>
 </html>
