@@ -6,39 +6,77 @@
     <title>Cat Clicker</title>
     <style>
         .cat-container {
-            display: inline-block;
-            margin: 20px;
             text-align: center;
         }
-        img { cursor: pointer; width: 300px; }
-        .cat-name { font-weight: bold; margin-bottom: 10px; }
+        .cat-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        img {
+            cursor: pointer;
+            width: 300px;
+            margin-bottom: 10px;
+        }
+        #cat-list li {
+            cursor: pointer;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        #cat-list li:hover {
+            background: #eee;
+        }
     </style>
 </head>
 <body>
     <h1>Cat Clicker</h1>
-    <div class="cat-container">
-        <div class="cat-name">Whiskers</div>
-        <img src="cat1.jpg" alt="Whiskers" id="cat1-img">
-        <div id="cat1-counter">Clicks: 0</div>
-    </div>
-    <div class="cat-container">
-        <div class="cat-name">Mittens</div>
-        <img src="cat2.jpg" alt="Mittens" id="cat2-img">
-        <div id="cat2-counter">Clicks: 0</div>
+    <div style="display: flex;">
+        <ul id="cat-list" style="list-style: none; padding: 0; margin-right: 40px;">
+            <!-- Cat names will be inserted here by JS -->
+        </ul>
+        <div id="cat-display" class="cat-container">
+            <!-- Selected cat info will be shown here by JS -->
+        </div>
     </div>
     <script>
-        function setupCatClicker(imgId, counterId) {
-            let clicks = 0;
-            const img = document.getElementById(imgId);
-            const counter = document.getElementById(counterId);
-            img.addEventListener('click', function() {
-                clicks++;
-                counter.textContent = `Clicks: ${clicks}`;
+        const cats = [
+            { name: "Whiskers", img: "https://placekitten.com/300/300", clicks: 0 },
+            { name: "Mittens", img: "https://placekitten.com/301/301", clicks: 0 },
+            { name: "Tiger", img: "https://placekitten.com/302/302", clicks: 0 },
+            { name: "Shadow", img: "https://placekitten.com/303/303", clicks: 0 },
+            { name: "Luna", img: "https://placekitten.com/304/304", clicks: 0 }
+        ];
+
+        const catList = document.getElementById('cat-list');
+        const catDisplay = document.getElementById('cat-display');
+
+        function renderCatList() {
+            catList.innerHTML = '';
+            cats.forEach((cat, idx) => {
+                const li = document.createElement('li');
+                li.textContent = cat.name;
+                li.onclick = () => showCat(idx);
+                catList.appendChild(li);
             });
         }
 
-        setupCatClicker('cat1-img', 'cat1-counter');
-        setupCatClicker('cat2-img', 'cat2-counter');
-    </script>
+        function showCat(index) {
+            const cat = cats[index];
+            catDisplay.innerHTML = `
+                <div class="cat-name">${cat.name}</div>
+                <img src="${cat.img}" alt="${cat.name}" id="cat-img">
+                <div id="cat-counter">Clicks: ${cat.clicks}</div>
+            `;
+            document.getElementById('cat-img').onclick = function() {
+                cat.clicks++;
+                document.getElementById('cat-counter').textContent = `Clicks: ${cat.clicks}`;
+            };
+        }
+
+        // Initial render
+        renderCatList();
+        showCat(0); // Show first cat by default
+        </script>
 </body>
 </html>
